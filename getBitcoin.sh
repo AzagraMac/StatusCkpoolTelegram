@@ -12,7 +12,7 @@ SHARES=$(echo $JSON | jq '.shares')
 BESTSHARE=$(echo $JSON | jq .worker | jq .[].bestever | numfmt --to=iec)
 ERROR=$(cat /root/rsyslog/raspberrypi/cgminer.log | grep Rejected | wc -l)
 OK=$(cat /root/rsyslog/raspberrypi/cgminer.log | grep Accepted | wc -l)
-
+BLOCK=$(cat /root/rsyslog/raspberrypi/cgminer.log | grep Found | wc -l)
 
 if [ $? -ne 0 ]
 then
@@ -21,7 +21,7 @@ else
         /usr/bin/curl -s -X POST $URL \
 		-d chat_id=$ID \
 		-d parse_mode=HTML \
-		-d text="$(printf "$MSG\n\t\t- \U1F4CA Hashrate: <code>$HASHRATE</code>\n\t\t- \U1F517 Shares: <code>$SHARES</code>\n\t\t- \U1F4C8 Bestshare: <code>$BESTSHARE</code>\n\t\t- \U1F4E6 Packages: \n\t\t\t\t\tOK: <code>$OK</code>\n\t\t\t\t\tError: <code>$ERROR</code>\n\t\t- \U26CF Workers: <code>$WORKER</code>")" \
+		-d text="$(printf "$MSG\n\t\t- \U1F4CA Hashrate: <code>$HASHRATE</code>\n\t\t- \U1F517 Shares: <code>$SHARES</code>\n\t\t- \U1F4C8 Bestshare: <code>$BESTSHARE</code>\n\t\t- \U1F4E6 Packages: \n\t\t\t\t\tOK: <code>$OK</code>\n\t\t\t\t\tError: <code>$ERROR</code>\n\t\t- \U1F381 Found block: <code>$BLOCK</code>\n\t\t- \U26CF Workers: <code>$WORKER</code>")" \
 		> /dev/null 2>&1
         exit 0
 fi
