@@ -3,6 +3,7 @@
 TOKEN="YOUR_TOKEN"
 ID="YOUR_CHAT_ID"
 WALLET="YOUR_ADDRESS_BTC"
+
 URL="https://api.telegram.org/bot$TOKEN/sendMessage"
 MSG="฿ Bitcoin"
 JSON=$(curl -s -X GET https://solo.ckpool.org/users/$WALLET -H "Accept: application/json" | jq .)
